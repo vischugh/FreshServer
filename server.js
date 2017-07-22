@@ -6,7 +6,7 @@ var app = express();
 var os = require('os');
 var bodyParser = require('body-parser');
 //var parseUrlencoded = bodyParser.urlencoded({extended: false});
-var port = 5000; //process.env.PORT_NUMBER
+var port = process.env.PORT_NUMBER || 5000;
 //var passport = require('passport');
 //var LocalStrategy = require('passport-local').Strategy;
 var cookieParser = require('cookie-parser');
@@ -27,13 +27,13 @@ app.use(cookieParser());
 
 
 //DB
-db.on('error', console.error.bind(console,'connection error'));
-db.on('open', function callback(){
+db.on('error', console.error.bind(console, 'connection error'));
+db.on('open', function callback() {
     console.log('Fresh DB Connected');
 });
 
 // Make our db accessible to our router
-app.use(function(req,res,next){
+app.use(function (req, res, next) {
     req.db = db;
     next();
 });
@@ -59,13 +59,13 @@ var atRouting = require('./routes/at-routes');
 //app.use(express.static('client'));
 
 //implementing routes
-app.use('/player',playerRouting);
-app.use('/user',userRouting);
-app.use('/coach',coachRouting);
-app.use('/atc',atRouting);
+app.use('/player', playerRouting);
+app.use('/user', userRouting);
+app.use('/coach', coachRouting);
+app.use('/atc', atRouting);
 //app.use('/signin', userRouting);
 
 //app.post('/signin', passport.auth);
 
 app.listen(port, os.hostname);
-console.log("Server listening at port" +port + "\nMake requests as localhost:"+port);
+console.log("Server listening at port" + port + "\nMake requests as localhost:" + port);
