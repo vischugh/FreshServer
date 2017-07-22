@@ -1,8 +1,26 @@
 {
-  "name": "application-name",
+  "name": "FreshServer",
   "version": "0.0.1",
+  "description": "A NodeJS server for Fresh App",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
-  }
+  },
+  "dependencies": {
+    "mongodb": "2.2.30",
+    "express": "4.15.2",
+    "body-parser": "1.17.2",
+    "cookie-parser": "1.4.3",
+    "express-session": "1.15.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vischugh/FreshServer.git"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "license": "MIT"
 }
