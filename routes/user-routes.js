@@ -34,7 +34,7 @@ router.route('/signup')
     .post(function (request, response) {
         var db = request.db;
         var UserLoginCollection = db.get('UserLogin');
-        console.log(request.body);
+        console.log('Inside signup route' + request.body);
         var userid = 0;
         UserLoginCollection.findOne({ Email: request.body.email }, function (e, user) {
             console.log(user);
