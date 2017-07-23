@@ -27,7 +27,9 @@ app.use(cookieParser());
 
 
 //DB
-db.on('error', console.error.bind(console, 'connection error'));
+db.on('error', function err(){
+    console.log('Error connecting to DB');
+});
 db.on('open', function callback() {
     console.log('Fresh DB Connected');
 });
@@ -48,10 +50,10 @@ app.use(function (request, response, next) {
 });
 
 //defining routes
-var playerRouting = require('./routes/player-routes');
-var userRouting = require('./routes/user-routes');
-var coachRouting = require('./routes/coach-routes');
-var atRouting = require('./routes/at-routes');
+var playerRouting = require('routes/player-routes');
+var userRouting = require('routes/user-routes');
+var coachRouting = require('routes/coach-routes');
+var atRouting = require('routes/at-routes');
 
 //var userRouting = require('./auth');
 
