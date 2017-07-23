@@ -50,10 +50,10 @@ app.use(function (request, response, next) {
 });
 
 //defining routes
-var playerRouting = require('routes/player-routes');
-var userRouting = require('routes/user-routes');
-var coachRouting = require('routes/coach-routes');
-var atRouting = require('routes/at-routes');
+var playerRouting = require('./routes/player-routes');
+var userRouting = require('./routes/user-routes');
+var coachRouting = require('./routes/coach-routes');
+var atRouting = require('./routes/at-routes');
 
 //var userRouting = require('./auth');
 
