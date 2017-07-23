@@ -15,7 +15,7 @@ app.set('port', (process.env.PORT || 5000));
 //Mongoose database
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('process.env.MONGOLAB_URI');
+var db = monk(process.env.MONGOLAB_URI);
 
 //Configuration
 app.use(bodyParser.json());
