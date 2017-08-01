@@ -81,7 +81,7 @@ router.route('/signup')
                 Email: request.body.email,
                 UserType: Number(request.body.usertype),
                 StatusCd: StatusCd,
-                TeamId: 10
+                TeamId: Number(request.body.teamid)
             });
             response.json("User Created");
             console.log("User Created");
