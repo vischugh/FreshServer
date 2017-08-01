@@ -88,6 +88,14 @@ router.route('/signup')
         }
     });
 
+router.route('/getteams')
+    .get(function (request, response){
+        var TeamCollection = db.get('Team');
+        TeamCollection.find({}, {}, function (e,team) {
+                                response.json(team);
+                            });
+    });
+
 router.route('/try')
     .get(function (request, response) {
         response.json("Working");
