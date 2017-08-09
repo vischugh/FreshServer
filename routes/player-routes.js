@@ -60,10 +60,13 @@ router.route('/survey')
                             Q9: 0,
                             Q10: 0,
                             Q11: 0,
-                            Q12: 0,
-                            Q13:0
+                            Q13: 0,
+                            Q15: 0,
+                            Q16: 0,
+                            Q17: 0,
+
                         }, function(survey){
-                            console.log('Pre survey created')
+                            console.log('Pre survey created');
                             response.json(survey);
                         });
                     });
@@ -79,7 +82,9 @@ router.route('/survey')
                 DateYear: request.body.answers.Date.TodayYear},{
                 $set: {
                     Q9: Number(request.body.answers.Q9),
-                    Q10: Number(request.body.answers.Q10)
+                    Q10: Number(request.body.answers.Q10),
+                    Q15: Number(request.body.answers.Q15),
+                    Q16: Number(request.body.answers.Q16)
                 }
             }, function(survey){
                 console.log("Post Survey Updated");

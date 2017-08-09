@@ -81,11 +81,20 @@ router.route('/signup')
                 Email: request.body.email,
                 UserType: Number(request.body.usertype),
                 StatusCd: StatusCd,
-                TeamId: 10
+                TeamId: Number(request.body.teamid)
             });
             response.json("User Created");
             console.log("User Created");
         }
+    });
+
+router.route('/getteams')
+    .get(function (request, response){
+        var db = request.db;
+        var TeamCollection = db.get('Team');
+        TeamCollection.find({}, {}, function (e,team) {
+                                response.json(team);
+                            });
     });
 
 router.route('/try')

@@ -225,4 +225,28 @@ router.route('/:atcId/teamavg')
         });
     });
 
+router.route('/addteam')
+    .post(function (request, response) {
+        console.log(request.body);
+        var db = request.db;
+        var TeamCollection = db.get('Team');
+        TeamCollection.findOne({}, {limit: 1, sort: ({TeamId: -1})}, function (e, team) {
+            if (team) {
+                var teamId = Number(team.TeamId) + 1;
+                TeamCollection.insert({
+                        TeamId: teamId,
+                        TeamName: request.body.Name
+                    });
+                response.json('Team Created');
+                }
+            else {
+                TeamCollection.insert({
+                    TeamId: Number(1),
+                    TeamName: request.body.Name
+                });
+                response.json('Team Created');
+            }
+        });
+    });
+
 module.exports = router;

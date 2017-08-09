@@ -73,6 +73,30 @@ router.route('/survey')
                 });
             response.json('Data stored');
         }
+
+        else if (Number(request.body.surveyType) == 7) {
+            console.log(request.body.UserId);
+            teamCollection.findOne({ CoachId: Number(request.body.UserId) }, function (e, team) {
+                if (e) throw e;
+                var teamId = Number(team.TeamId);
+                console.log(team.TeamName);
+
+                surveyCollection.update({
+                    TeamId: teamId,
+                    DateDay: request.body.answers.Date.TodayDate,
+                    DateMonth: request.body.answers.Date.TodayMonth,
+                    DateYear: request.body.answers.Date.TodayYear
+                }, {
+                    $set: {
+                        Q17: Number(request.body.answers.Q17)
+                    }
+                }, function (e, survey) {
+                    if (e) throw e;
+                    response.json(survey);
+                });
+
+            });
+        }
     });
 
 router.route('/allPlayers/:coachId')
@@ -160,7 +184,11 @@ router.route('/aggresults/:coachId')
                     AvgQ7: { $avg: "$Q7" },
                     AvgQ8: { $avg: "$Q8" },
                     AvgQ9: { $avg: "$Q9" },
-                    AvgQ10: { $avg: "$Q10" }
+                    AvgQ10: { $avg: "$Q10" },
+                    AvgQ11: {$avg: "$Q11"},
+                    AvgQ17: {$avg: "$Q17"},
+                    AvgQ19: {$avg: "$Q19"},
+
                 }
             }], {}, function (e, survey) {
                 console.log("survey");
@@ -174,6 +202,37 @@ router.route('/aggresults/:coachId')
                 response.json(coachSurvey);
             })
         });
+    });
+
+router.route('/sessionrating')
+    .get(function (request, response){
+        var db = request.db;
+        var coachId = Number(request.params.coachId);
+        var surveyCollection = db.get('Survey');
+        var teamCollection = db.get('Team');
+        teamCollection.findOne({ CoachId: coachId }, {}, function (e, team) {
+            if (e) throw e;
+            console.log(team);
+            var teamId = Number(team.TeamId);
+            surveyCollection.aggregate([{
+                $group: {
+                    _id: { "DateDay": "$DateDay", "DateMonth": "$DateMonth", "DateYear": "$DateYear", "TeamId": "$TeamId" },
+                    AvgQ9: { $avg: "$Q9" },
+                    AvgQ11: {$avg: "$Q11"}
+                }
+            }], {}, function (e, survey) {
+                console.log("survey");
+                var coachSurvey = [];
+                for (var index in survey) {
+                    if (Number(survey[index]._id.TeamId) == teamId) {
+                        coachSurvey.push(survey[index]);
+                    }
+                }
+                console.log(coachSurvey);
+                response.json(coachSurvey);
+            })
+        });
+
     });
 
 router.route('/teampracticeavg/:coachId')
