@@ -15,7 +15,7 @@ app.set('port', (process.env.PORT || 5000));
 //Mongoose database
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('process.env.MONGOLAB_URI');
+var db = monk(process.env.MONGOLAB_URI);
 
 //Configuration
 app.use(bodyParser.json());
@@ -27,7 +27,9 @@ app.use(cookieParser());
 
 
 //DB
-db.on('error', console.error.bind(console, 'connection error'));
+db.on('error', function err(){
+    console.log('Error connecting to DB');
+});
 db.on('open', function callback() {
     console.log('Fresh DB Connected');
 });
