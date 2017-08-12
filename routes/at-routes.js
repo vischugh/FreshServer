@@ -129,7 +129,9 @@ router.route('/aggresults/:atcId')
                     AvgQ10: { $avg: "$Q10" },
                     AvgQ11: { $avg: "$Q11" },
                     AvgQ12: { $avg: "$Q12" },
-                    AvgQ13: { $avg: "$Q13" }
+                    AvgQ13: { $avg: "$Q13" },
+                    AvgQ17: {$avg: "$Q17"},
+                    AvgQ19: {$avg: "$Q19"}
                 }
             }], {}, function (e, survey) {
                 console.log("survey");
@@ -209,7 +211,10 @@ router.route('/:atcId/teamavg')
                     AvgQ7: { $avg: "$Q7" },
                     AvgQ8: { $avg: "$Q8" },
                     AvgQ9: { $avg: "$Q9" },
-                    AvgQ10: { $avg: "$Q10" }
+                    AvgQ10: { $avg: "$Q10" },
+                    AvgQ13: { $avg: "$Q13" },
+                    AvgQ17: {$avg: "$Q17"},
+                    AvgQ19: {$avg: "$Q19"}
                 }
             }], {}, function (e, survey) {
                 console.log("survey");
