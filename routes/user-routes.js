@@ -18,7 +18,7 @@ router.route('/login')
                 var login = true;
                 console.log(login);
                 var userId = Number(user.UserId);
-                UserCollection.findOne({UserId: userId}, function(e, user){
+                UserCollection.findOne({ UserId: userId }, function (e, user) {
                     response.json(user);
                 });
             }
@@ -83,18 +83,49 @@ router.route('/signup')
                 StatusCd: StatusCd,
                 TeamId: Number(request.body.teamid)
             });
+
+            //To insert coach and atcid in Team table
+            if (request.body.usertype == '2' || request.body.usertype == '3') {
+                var teamCollection = db.get('Team');
+                teamCollection.findOne({ TeamId: Number(request.body.teamid) }, {}, function (e, team) {
+                    if (request.body.usertype == '3') {
+                        teamCollection.update({
+                            TeamId: team.TeamId
+                        },
+                            {
+                                $set: {
+                                    ATCId: userid
+                                }
+                            }, function (team) {
+                                console.log('Team Collection Updated');
+                            });
+                    } else {
+                        teamCollection.update({
+                            TeamId: team.TeamId
+                        },
+                            {
+                                $set: {
+                                    CoachId: userid
+                                }
+                            }, function (team) {
+                                console.log('Team Collection Updated');
+                            });
+                    }
+                });
+            }
+
             response.json("User Created");
             console.log("User Created");
         }
     });
 
 router.route('/getteams')
-    .get(function (request, response){
+    .get(function (request, response) {
         var db = request.db;
         var TeamCollection = db.get('Team');
-        TeamCollection.find({}, {}, function (e,team) {
-                                response.json(team);
-                            });
+        TeamCollection.find({}, {}, function (e, team) {
+            response.json(team);
+        });
     });
 
 router.route('/try')
