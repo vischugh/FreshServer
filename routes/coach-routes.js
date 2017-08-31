@@ -50,6 +50,8 @@ router.route('/survey')
                         $set: {
                             Q11: Number(request.body.answers.Q11)
                         }
+                    }, {
+                        multi: true
                     }, function (e, survey) {
                         if (e) throw e;
                         response.json(survey);
@@ -87,15 +89,15 @@ router.route('/survey')
                     DateMonth: request.body.answers.Date.TodayMonth,
                     DateYear: request.body.answers.Date.TodayYear
                 }, {
-                    $set: {
-                        Q17: Number(request.body.answers.Q17)
-                    }
-                }, {
-                    multi: true
-                }, function (e, survey) {
-                    if (e) throw e;
-                    response.json(survey);
-                });
+                        $set: {
+                            Q17: Number(request.body.answers.Q17)
+                        }
+                    }, {
+                        multi: true
+                    }, function (e, survey) {
+                        if (e) throw e;
+                        response.json(survey);
+                    });
 
             });
         }
@@ -187,9 +189,9 @@ router.route('/aggresults/:coachId')
                     AvgQ8: { $avg: "$Q8" },
                     AvgQ9: { $avg: "$Q9" },
                     AvgQ10: { $avg: "$Q10" },
-                    AvgQ11: {$avg: "$Q11"},
-                    AvgQ17: {$avg: "$Q17"},
-                    AvgQ19: {$avg: "$Q19"},
+                    AvgQ11: { $avg: "$Q11" },
+                    AvgQ17: { $avg: "$Q17" },
+                    AvgQ19: { $avg: "$Q19" },
 
                 }
             }], {}, function (e, survey) {
@@ -207,7 +209,7 @@ router.route('/aggresults/:coachId')
     });
 
 router.route('/sessionrating')
-    .get(function (request, response){
+    .get(function (request, response) {
         var db = request.db;
         var coachId = Number(request.params.coachId);
         var surveyCollection = db.get('Survey');
@@ -220,7 +222,7 @@ router.route('/sessionrating')
                 $group: {
                     _id: { "DateDay": "$DateDay", "DateMonth": "$DateMonth", "DateYear": "$DateYear", "TeamId": "$TeamId" },
                     AvgQ9: { $avg: "$Q9" },
-                    AvgQ11: {$avg: "$Q11"}
+                    AvgQ11: { $avg: "$Q11" }
                 }
             }], {}, function (e, survey) {
                 console.log("survey");
@@ -238,7 +240,7 @@ router.route('/sessionrating')
     });
 
 router.route('/teampracticeavg/:coachId')
-    .get(function(request, response){
+    .get(function (request, response) {
         var db = request.db;
         var coachId = Number(request.params.coachId);
         var teamCollection = db.get('Team');
