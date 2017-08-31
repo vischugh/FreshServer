@@ -90,6 +90,8 @@ router.route('/survey')
                     $set: {
                         Q17: Number(request.body.answers.Q17)
                     }
+                }, {
+                    multi: true
                 }, function (e, survey) {
                     if (e) throw e;
                     response.json(survey);
