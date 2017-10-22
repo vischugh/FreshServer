@@ -115,35 +115,182 @@ router.route('/aggresults/:atcId')
             if (e) throw e;
             console.log(team);
             var teamId = Number(team.TeamId);
-            surveyCollection.aggregate([{
-                $group: {
-                    _id: { "DateDay": "$DateDay", "DateMonth": "$DateMonth", "DateYear": "$DateYear", "TeamId": "$TeamId" },
-                    AvgQ1: { $avg: "$Q1" },
-                    AvgQ2: { $avg: "$Q2" },
-                    AvgQ3: { $avg: "$Q3" },
-                    AvgQ4: { $avg: "$Q4" },
-                    AvgQ5: { $avg: "$Q5" },
-                    AvgQ7: { $avg: "$Q7" },
-                    AvgQ8: { $avg: "$Q8" },
-                    AvgQ9: { $avg: "$Q9" },
-                    AvgQ10: { $avg: "$Q10" },
-                    AvgQ11: { $avg: "$Q11" },
-                    AvgQ12: { $avg: "$Q12" },
-                    AvgQ13: { $avg: "$Q13" },
-                    AvgQ17: {$avg: "$Q17"},
-                    AvgQ19: {$avg: "$Q19"}
-                }
-            }], {}, function (e, survey) {
-                console.log("survey");
-                var atcSurvey = [];
-                for (var index in survey) {
-                    if (Number(survey[index]._id.TeamId) == teamId) {
-                        atcSurvey.push(survey[index]);
+            surveyCollection.aggregate([
+                {
+                    $project: {
+                        _id: 1,
+                        DateDay: 1,
+                        DateMonth: 1,
+                        DateYear: 1,
+                        TeamId: 1,
+                        Q1: {
+                            $cond:
+                            {
+                                if: { $eq: ["$Q1", 0] },
+                                then: null,
+                                else: "$Q1"
+                            }
+                        },
+                        Q2: {
+                            $cond:
+                            {
+                                if: { $eq: ["$Q2", 0] },
+                                then: null,
+                                else: "$Q2"
+                            }
+                        },
+                        Q3: {
+                            $cond:
+                            {
+                                if: { $eq: ["$Q3", 0] },
+                                then: null,
+                                else: "$Q3"
+                            }
+                        },
+                        Q4: {
+                            $cond:
+                            {
+                                if: { $eq: ["$Q4", 0] },
+                                then: null,
+                                else: "$Q4"
+                            }
+                        },
+                        Q5: {
+                            $cond:
+                            {
+                                if: { $eq: ["$Q5", 0] },
+                                then: null,
+                                else: "$Q5"
+                            }
+                        },
+                        Q6: {
+                            $cond:
+                            {
+                                if: { $eq: ["$Q6", 0] },
+                                then: null,
+                                else: "$Q6"
+                            }
+                        },
+                        Q7: {
+                            $cond:
+                            {
+                                if: { $eq: ["$Q7", 0] },
+                                then: null,
+                                else: "$Q7"
+                            }
+                        },
+                        Q8: {
+                            $cond:
+                            {
+                                if: { $eq: ["$Q8", 0] },
+                                then: null,
+                                else: "$Q8"
+                            }
+                        },
+                        Q9: {
+                            $cond:
+                            {
+                                if: { $eq: ["$Q9", 0] },
+                                then: null,
+                                else: "$Q9"
+                            }
+                        },
+                        Q10: {
+                            $cond:
+                            {
+                                if: { $eq: ["$Q10", 0] },
+                                then: null,
+                                else: "$Q10"
+                            }
+                        },
+                        Q11: {
+                            $cond:
+                            {
+                                if: { $eq: ["$Q11", 0] },
+                                then: null,
+                                else: "$Q11"
+                            }
+                        },
+                        Q12: {
+                            $cond:
+                            {
+                                if: { $eq: ["$Q12", 0] },
+                                then: null,
+                                else: "$Q12"
+                            }
+                        },
+                        Q13: {
+                            $cond:
+                            {
+                                if: { $eq: ["$Q13", 0] },
+                                then: null,
+                                else: "$Q13"
+                            }
+                        },
+                        Q14: {
+                            $cond:
+                            {
+                                if: { $eq: ["$Q14", 0] },
+                                then: null,
+                                else: "$Q14"
+                            }
+                        },
+                        Q15: {
+                            $cond:
+                            {
+                                if: { $eq: ["$Q15", 0] },
+                                then: null,
+                                else: "$Q15"
+                            }
+                        },
+                        Q17: {
+                            $cond:
+                            {
+                                if: { $eq: ["$Q17", 0] },
+                                then: null,
+                                else: "$Q17"
+                            }
+                        },
+                        Q19: {
+                            $cond:
+                            {
+                                if: { $eq: ["$Q19", 0] },
+                                then: null,
+                                else: "$Q19"
+                            }
+                        }
+
                     }
-                }
-                console.log(atcSurvey);
-                response.json(atcSurvey);
-            })
+                },
+                {
+                    $group: {
+                        _id: { "DateDay": "$DateDay", "DateMonth": "$DateMonth", "DateYear": "$DateYear", "TeamId": "$TeamId" },
+                        AvgQ1: { $avg: "$Q1" },
+                        AvgQ2: { $avg: "$Q2" },
+                        AvgQ3: { $avg: "$Q3" },
+                        AvgQ4: { $avg: "$Q4" },
+                        AvgQ5: { $avg: "$Q5" },
+                        AvgQ7: { $avg: "$Q7" },
+                        AvgQ8: { $avg: "$Q8" },
+                        AvgQ9: { $avg: "$Q9" },
+                        AvgQ10: { $avg: "$Q10" },
+                        AvgQ11: { $avg: "$Q11" },
+                        AvgQ12: { $avg: "$Q12" },
+                        AvgQ13: { $avg: "$Q13" },
+                        AvgQ17: { $avg: "$Q17" },
+                        AvgQ19: { $avg: "$Q19" }
+                    }
+                }], {}, function (e, survey) {
+                    console.log("survey");
+                    var atcSurvey = [];
+                    for (var index in survey) {
+                        if (Number(survey[index]._id.TeamId) == teamId) {
+                            atcSurvey.push(survey[index]);
+                        }
+                    }
+                    console.log(atcSurvey);
+                    response.json(atcSurvey);
+                })
         });
     });
 
@@ -213,8 +360,8 @@ router.route('/:atcId/teamavg')
                     AvgQ9: { $avg: "$Q9" },
                     AvgQ10: { $avg: "$Q10" },
                     AvgQ13: { $avg: "$Q13" },
-                    AvgQ17: {$avg: "$Q17"},
-                    AvgQ19: {$avg: "$Q19"}
+                    AvgQ17: { $avg: "$Q17" },
+                    AvgQ19: { $avg: "$Q19" }
                 }
             }], {}, function (e, survey) {
                 console.log("survey");
@@ -235,15 +382,15 @@ router.route('/addteam')
         console.log(request.body);
         var db = request.db;
         var TeamCollection = db.get('Team');
-        TeamCollection.findOne({}, {limit: 1, sort: ({TeamId: -1})}, function (e, team) {
+        TeamCollection.findOne({}, { limit: 1, sort: ({ TeamId: -1 }) }, function (e, team) {
             if (team) {
                 var teamId = Number(team.TeamId) + 1;
                 TeamCollection.insert({
-                        TeamId: teamId,
-                        TeamName: request.body.Name
-                    });
+                    TeamId: teamId,
+                    TeamName: request.body.Name
+                });
                 response.json('Team Created');
-                }
+            }
             else {
                 TeamCollection.insert({
                     TeamId: Number(1),
